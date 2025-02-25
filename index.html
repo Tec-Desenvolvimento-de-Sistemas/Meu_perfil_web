@@ -4,18 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Aluno</title>
-    <style>
-        body {
-           font-family: Arial, sans-serif;
-           padding: 20px;
-        }
-        .card {
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Dados do Aluno</h1>
@@ -37,8 +26,39 @@
             <p>Nome: ${perfil.nome}</p>
             <p>Idade: ${perfil.idade}</p>`;
         }
-        
+        async function carregarEndereco() {
+            const enderecoReq = fetch('http://localhost:3000/endereço');
+
+            const [enderecoRes] = await Promise.all([enderecoReq]);
+            
+            const endereco = await enderecoRes.json();
+            
+            document.getElementById('endereco').innerHTML = `
+            <h2>Endereço</h2>
+            <p>Rua: ${endereco.rua}</p>
+            <p>Bairro: ${endereco.bairro}</p>
+            <p>Cidade: ${endereco.cidade}</p>
+            <p>Estado: ${endereco.estado}</p>
+            <p>CEP: ${endereco.cep}</p>`;
+        }
+        async function carregarEscolaridade() {
+            const escolaridadeReq = fetch('http://localhost:3000/escolaridade');
+
+            const [escolaridadeRes] = await Promise.all([escolaridadeReq]);
+            
+            const escolaridade = await escolaridadeRes.json();
+            
+            document.getElementById('escolaridade').innerHTML = `
+            <h2>Escolaridade</h2>
+            <p>Escola: ${escolaridade.escola}</p>
+            <p>Série: ${escolaridade.serie}</p>
+            <p>Curso: ${escolaridade.curso}</p>
+            <p>Período: ${escolaridade.periodo}</p>
+            <p>Ano de conclusão: ${escolaridade.ano_de_conclusao}</p>`;
+        }
         carregarDados();
+        carregarEndereco();
+        carregarEscolaridade();
     </script>
     
 </body>
